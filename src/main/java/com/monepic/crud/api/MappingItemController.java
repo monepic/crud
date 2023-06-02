@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("mappingItem")
+@RequestMapping({"some", "mappingItems"})
 public class MappingItemController {
 
     final MappingItemRepo repo;
