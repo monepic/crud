@@ -14,30 +14,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 @Entity
-@JsonSchemaMetadata(key="classData", value="theClassData")
-@JsonClassDescription("This is the MappingItem description")
+@JsonSchemaMetadata(key="someClassMetadataField", value="this data is set at the class level")
+@JsonClassDescription("This is the 'MappingItem' description")
 public class MappingItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonSchemaMetadata(key = "someField", value="someValue")
+    @JsonSchemaMetadata(key = "arbitraryMetadataField", value="this data is set on the 'from' property")
     @Column(name="dfrom")
     private String from;
 
-    @JsonPropertyDescription("Description of the to field")
+    @JsonPropertyDescription("Description of the 'to' field")
     @Column(name="dto")
     private String to;
 
-
     @Email
+    @JsonPropertyDescription("This field includes a URL which is automatically mapped to a controller and can be used for client-side validation")
     @ValidationUrl(controller = ValidationController.class, path = "email", parameters="email")
     private String email;
 
@@ -51,8 +50,7 @@ public class MappingItem {
         return 12.5d;
     }
 
-    @NotNull
     public String otherMethod() {
-        return "should be ignored";
+        return "should be ignored by the schema as it's not a not a getter/setter method";
     }
 }
